@@ -29,60 +29,71 @@ function playRound(playerSelection, computerSelection){
 
     if(playerSelection.toLowerCase() == "rock" && computerSelection.toLowerCase() == "rock")
     {
-        return "It's a draw";
+        resultText.innerText = "It's a draw";
+        
         
     }
     else if(playerSelection.toLowerCase() == "rock"&& computerSelection.toLowerCase() == "scissor"){
         
+        scoreUser++;
+        checkWinnerGame(scoreUser,scoreCPU);
+        resultText.innerText = "You Won! Rock beats Scissor";
         
-        console.log("You Won! Rock beats Scissor") ;
-         scoreUser++;
          
     }
     else if(playerSelection.toLowerCase() == "rock" && computerSelection.toLowerCase() == "paper"){
         
+        scoreCPU++;
+        checkWinnerGame(scoreUser,scoreCPU);
+        resultText.innerText = "You Lose! Paper beats Rock";
         
-        console.log ("You Lose! Paper beats Rock");
-         scoreCPU++;
          
     }
     else if(playerSelection.toLowerCase() == "paper" && computerSelection.toLowerCase() == "paper"){
-         return "It's a draw";
+        resultText.innerText = "It's a draw";
+
     }
     else if(playerSelection.toLowerCase() == "paper"&& computerSelection.toLowerCase() == "rock"){
         
-        
-        console.log( "You Won! Paper beats Rock");
         scoreUser++;
+        checkWinnerGame(scoreUser,scoreCPU);
+        resultText.innerText = "You Won! Paper beats Rock";
+        
          
     }
     else if(playerSelection.toLowerCase() == "paper" && computerSelection.toLowerCase() == "scissor"){
         
-        console.log("You Lose! Scissor beats Paper");
         scoreCPU++;
+        checkWinnerGame(scoreUser,scoreCPU);
+        resultText.innerText = "You Lose! Scissor beats Paper";
+        
         
     }
     else if(playerSelection.toLowerCase() == "scissor" && computerSelection.toLowerCase() == "scissor"){
-        return "It's a draw";
+        
+        resultText.innerText = "It's a draw";
         
     }
     else if(playerSelection.toLowerCase() == "scissor" && computerSelection.toLowerCase() == "paper"){
         
-        
-        console.log("You Won! Scissor beats Paper");
         scoreUser++;
+        checkWinnerGame(scoreUser,scoreCPU);
+        resultText.innerText = "You Won! Scissor beats Paper";
+        
          
     }
     else if(playerSelection.toLowerCase() == "scissor" && computerSelection.toLowerCase() == "rock"){
         
-        
-        console.log("You Lose! Rock beats Scissor") ;
         scoreCPU++;
+        checkWinnerGame(scoreUser,scoreCPU);
+        resultText.innerText = "You Lose! Rock beats Scissor";
+        
         
     }
     else{
-        console.log("wtf");
-        alert("wtf");
+        resultText.innerText = "Something Wrong happend";
+        
+        
     }
 }
 
@@ -121,18 +132,77 @@ function game(){
 }
 
 function checkWinnerGame(scoreUser,scoreCPU){
-    if (scoreUser == 3){
-        console.log("Congrats you have won!");
-       
+    if (scoreUser == 5){
+
+        alert("You have won the game!");
+        scoreUser = resetScoreUser();
+        scoreCPU = resetScoreCPU();
+    
     }
-    else if(scoreCPU == 3){
-        console.log("You lost");
+    else if(scoreCPU == 5){
+
+        alert("You lost");
+        scoreUser = resetScoreUser();
+        scoreCPU = resetScoreCPU();
         
     }
 }
 
+let btn1 = document.createElement("button");
+let btn2 = document.createElement("button");
+let btn3 = document.createElement("button");
+
+btn1.innerText = "Rock";
+btn2.innerText = "Paper";
+btn3.innerText = "Scissor";
+
+btn1.addEventListener("click",rockSelection);
+
+function rockSelection(){
+    playerSelection = "Rock";
+    cpuChoice = computerPlay();
+    playRound(playerSelection,cpuChoice);
+    resultContainer.innerHTML = scoreUser + " : " + scoreCPU;
+}
+
+btn2.addEventListener("click",paperSelection);
+
+function paperSelection(){
+    playerSelection = "Paper";
+    cpuChoice = computerPlay();
+    playRound(playerSelection,cpuChoice);
+    resultContainer.innerHTML = scoreUser + " : " + scoreCPU;
+}
+
+btn3.addEventListener("click",scissorSelection);
+
+function scissorSelection(){
+    playerSelection = "Scissor";
+    cpuChoice = computerPlay();
+    playRound(playerSelection,cpuChoice);
+    resultContainer.innerHTML = scoreUser + " : " + scoreCPU;
+}
 
 
+document.body.appendChild(btn1);
+document.body.appendChild(btn2);
+document.body.appendChild(btn3);
 
+let resultContainer = document.createElement("div");
 
+let resultText = document.createElement("p");
+resultText.innerText = "Result Text";
 
+document.body.appendChild(resultText);
+
+resultContainer.innerHTML = scoreUser + " : " + scoreCPU; //so it says 0 : 0 at the start
+document.body.append(resultContainer);
+
+function resetScoreUser(){
+    scoreUser = 0;
+    return scoreUser;
+}
+function resetScoreCPU(){
+    scoreCPU = 0;
+    return scoreUser;
+}
